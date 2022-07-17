@@ -4,7 +4,7 @@ namespace Pay.API.Interfaces
 {
     public interface IDataSrc
     {
-        public Task<DataSrcModel> GetData(Guid Id);
+        public Task<DataSrcModel?> GetData(Guid Id);
 
         public Task<ICollection<DataSrcModel>> GetAllData();
 

@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-
-namespace Pay.API.ServiceExtensions
+﻿namespace Pay.API.ServiceExtensions
 {
     public static class ServiceExtensions
     {

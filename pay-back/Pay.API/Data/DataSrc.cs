@@ -7,9 +7,9 @@ namespace Pay.API.Data
     {
         private List<DataSrcModel> DataObj = new List<DataSrcModel>();
 
-        public Task<DataSrcModel> GetData(Guid Id)
+        public Task<DataSrcModel?> GetData(Guid Id)
         {
-            DataSrcModel result = DataObj.First(w => w.Id == Id);
+            DataSrcModel? result = DataObj.FirstOrDefault(w => w.Id == Id);
             return Task.FromResult(result);
         }
 
@@ -20,11 +20,13 @@ namespace Pay.API.Data
             return Task.FromResult(results);
         }
 
-        public Task<DataSrcModel> AddData(DataSrcModel dataSrcModel)
+        public async Task<DataSrcModel> AddData(DataSrcModel dataSrcModel)
         {
+            dataSrcModel.Id = Guid.NewGuid();
+            dataSrcModel.IsPalindrome = await IsPalindrome(dataSrcModel.Value);
             DataObj.Add(dataSrcModel);
 
-            return Task.FromResult(dataSrcModel);
+            return dataSrcModel;
         }
 
         public Task<int> RemoveData(Guid Id)
@@ -34,7 +36,7 @@ namespace Pay.API.Data
 
         public Task<bool> UpdateData(Guid Id, string value)
         {
-            DataSrcModel result = DataObj.First(w => w.Id == Id);
+            DataSrcModel? result = DataObj.FirstOrDefault(w => w.Id == Id);
             if (result == null) return Task.FromResult(false);
             result.Value = value;
             return Task.FromResult(true);
