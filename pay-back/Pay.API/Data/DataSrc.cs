@@ -34,12 +34,13 @@ namespace Pay.API.Data
             return Task.FromResult(DataObj.RemoveAll(w => w.Id == Id));
         }
 
-        public Task<bool> UpdateData(Guid Id, string value)
+        public async Task<bool> UpdateData(Guid Id, string value)
         {
             DataSrcModel? result = DataObj.FirstOrDefault(w => w.Id == Id);
-            if (result == null) return Task.FromResult(false);
+            if (result == null) return false;
             result.Value = value;
-            return Task.FromResult(true);
+            result.IsPalindrome = await IsPalindrome(result.Value);
+            return true;
         }
 
         public Task<bool> IsPalindrome(string value)
